@@ -157,6 +157,7 @@
 	}
 
 	construct {
+		layout_manager = null;
 		name_label.use_markup = false;
 		avatar_overlay.set_size_request (avatar.size, avatar.size);
 		open.connect (on_open);
@@ -188,6 +189,26 @@
 		stats_simple_action.set_enabled (false);
 
 		name_button.clicked.connect (on_name_button_clicked);
+	}
+
+	public override Gtk.SizeRequestMode get_request_mode () {
+		return child.get_request_mode ();
+	}
+
+	public override void measure (Gtk.Orientation orientation, int for_size,
+								  out int min, out int nat,
+								  out int min_baseline, out int nat_baseline) {
+		child.measure (orientation, for_size, out min, out nat,
+					  out min_baseline, out nat_baseline);
+		if (orientation == Gtk.Orientation.VERTICAL) {
+			min = nat;
+			min_baseline = nat_baseline;
+		}
+	}
+
+	public override void size_allocate (int width, int height, int baseline) {
+		Gtk.Allocation child_allocation = { 0, 0, width, height };
+		child.allocate_size (child_allocation, baseline);
 	}
 
 	private void on_name_button_clicked () {
