@@ -59,7 +59,12 @@
             "name" : "gtk",
             "buildsystem" : "meson",
             "config-opts" : [
-                "-Dvulkan=disabled"
+                "-Dvulkan=disabled",
+                "-Ddocumentation=false",
+                "-Dbuild-demos=false",
+                "-Dbuild-examples=false",
+                "-Dbuild-tests=false",
+                "-Dbuild-testsuite=false"
             ],
             "sources" : [
                 {
